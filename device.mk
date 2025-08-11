@@ -74,6 +74,7 @@ PRODUCT_COPY_FILES += \
 
 
 # HDMI CEC
+PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/overlay/vendor/etc/permissions/android.hardware.hdmi.cec.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.hdmi.cec.xml
 
 # Bluetooth

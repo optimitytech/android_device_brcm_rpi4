@@ -11,6 +11,31 @@ exit_with_error() {
   exit 1
 }
 
+# === ARGUMENT PARSING ===
+ARCHIVE=false
+PLACEHOLDER=""
+
+for arg in "$@"; do
+  case $arg in
+    --help|-h)
+      echo "Usage: $0 [--archive]"
+      exit 0
+      ;;
+    --archive)
+      ARCHIVE=true
+      shift
+      ;;
+    --placeholder)
+      PLACEHOLDER=""
+      shift
+      ;;
+    *)
+      echo "Unknown argument: $arg"
+      exit 1
+      ;;
+  esac
+done
+
 if [ -z ${TARGET_PRODUCT} ]; then
   exit_with_error "TARGET_PRODUCT environment variable is not set. Run lunch first."
 fi
@@ -26,7 +51,8 @@ for PARTITION in "boot" "system" "vendor"; do
 done
 
 VERSION=RaspberryVanillaAOSP14
-DATE=$(date +%Y%m%d)
+# DATE=$(date +%Y%m%d)
+DATE=$(date +%d-%m-%Y_%H%M)
 TARGET=$(echo ${TARGET_PRODUCT} | sed 's/^aosp_//')
 IMGNAME=${VERSION}-${DATE}-${TARGET}.img
 IMGSIZE=15360000000
@@ -92,4 +118,15 @@ sudo losetup -d "/dev/${LOOPDEV}"
 sudo chown ${USER}:${USER} ${ANDROID_PRODUCT_OUT}/${IMGNAME}
 
 echo "Done, created ${ANDROID_PRODUCT_OUT}/${IMGNAME}!"
+
+if $ARCHIVE; then
+  echo "Archiving is enabled, creating zip file..."
+  echo "Archiving..."
+  zip -r ${IMGNAME}.zip ${ANDROID_PRODUCT_OUT}/${IMGNAME}
+else
+  echo "Archiving is disabled, skipping zip creation."
+  exit 0
+fi
+
 exit 0
+

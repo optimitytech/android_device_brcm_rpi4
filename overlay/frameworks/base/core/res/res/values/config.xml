@@ -1,0 +1,6 @@
+<resources>
+    <bool name="config_cecHdmiCecEnabled_userConfigurable">false</bool>
+    <bool name="config_cecHdmiCecControlEnabled_allowed">false</bool>
+    <bool name="config_cecHdmiCecControlEnabled_default">false</bool>
+</resources>
+

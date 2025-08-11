@@ -36,8 +36,16 @@ persist.bluetooth.a2dp_aac.vbr_supported=true
 ro.hardware.camera=libcamera
 
 # CEC
-persist.hdmi.cec_device=cec0
-ro.hdmi.device_type=4
+# CEC = Consumer Electronics Control.
+# It is a side-channel in the HDMI cable that lets devices send simple control commands to each other.
+# The Android CEC HAL (HdmiControlService) expects the HAL to report:
+# Port number
+# Physical address (like 1.0.0.0)
+# Logical address (positive integer from the valid range)
+# Disabling CEC, so that Android Boot Completes
+
+# persist.hdmi.cec_device=cec0
+# ro.hdmi.device_type=4
 
 # Chipset
 ro.soc.manufacturer=Broadcom
